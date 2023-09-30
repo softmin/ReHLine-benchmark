@@ -27,9 +27,9 @@ class Dataset(BaseDataset):
         dataset = fetch_openml(name=self.dataset_name)
         X = dataset.data.values
         if self.dataset_name == 'steel-plates-fault':
-            y = dataset.target.values.map({'1':-1., '2':1.})
+            y = dataset.target.values.map({'1': -1., '2': 1.}, na_action=None)
         elif self.dataset_name in ['philippine', 'creditcard']:
-            y = dataset.target.values.map({'0':-1., '1':1.})
+            y = dataset.target.values.map({'0': -1., '1': 1.}, na_action=None)
         else:
             y = dataset.target.values
 
@@ -40,4 +40,4 @@ class Dataset(BaseDataset):
         n, d = X.shape
         data = dict(X=X, y=y)
 
-        return self.dataset_name, data
+        return data
