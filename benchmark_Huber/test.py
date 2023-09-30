@@ -2,9 +2,8 @@ import numpy as np
 import warnings
 import sys
 from benchopt import BaseSolver, safe_import_context
-sys.path.insert(0, '../') # the code for ReHLine is in this directory
 import numpy as np
-from _rehline import ReHLine
+from rehline import ReHLine
 
 n = 500
 d = 100

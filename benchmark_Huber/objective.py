@@ -2,7 +2,7 @@ import numpy as np
 from benchopt import BaseObjective
 
 class Objective(BaseObjective):
-    min_benchopt_version = "1.3"
+    min_benchopt_version = "1.5"
     name = "ElasticHuber"
 
     parameters = {
@@ -19,7 +19,10 @@ class Objective(BaseObjective):
     def set_data(self, X, y):
         self.X, self.y = X, y
 
-    def compute(self, beta):
+    def get_one_result(self):
+        return np.zeros(self.X.shape[1])
+
+    def evaluate_result(self, beta):
         n, d = self.X.shape
         out = np.dot(self.X, beta)
         res = abs(self.y - out)

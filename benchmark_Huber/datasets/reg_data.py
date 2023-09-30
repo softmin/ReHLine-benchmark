@@ -33,4 +33,4 @@ class Dataset(BaseDataset):
         X = scaler.fit_transform(X)
         data = dict(X=X, y=y)
 
-        return self.dataset_name, data
+        return data
