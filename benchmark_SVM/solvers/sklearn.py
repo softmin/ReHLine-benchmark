@@ -11,7 +11,7 @@ with safe_import_context() as import_ctx:
 class Solver(BaseSolver):
     name = 'sklearn'
 
-    install_cmd = 'conda'
+    install_cmd = 'pip'
     requirements = ['scikit-learn']
 
     parameters = {

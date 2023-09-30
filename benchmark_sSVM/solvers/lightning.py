@@ -28,9 +28,10 @@ class Solver(BaseSolver):
             self.clf = SAGAClassifier(loss='smooth_hinge', alpha=1.0, gamma=1.0, tol=1e-20)
         elif self.solver == 'SVRG':
             self.clf = SAGAClassifier(loss='smooth_hinge', alpha=1.0, gamma=1.0, tol=1e-20)
+
     def run(self, n_iter):
         self.clf.max_iter = n_iter
         self.clf.fit(self.X, self.y)
 
     def get_result(self):
-        return self.clf.coef_.flatten()
+        return dict(beta=self.clf.coef_.flatten())
