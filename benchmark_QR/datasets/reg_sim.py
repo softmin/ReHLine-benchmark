@@ -35,4 +35,4 @@ class Dataset(BaseDataset):
         n, d = X.shape
         data = dict(X=X, y=y, q=0.1)
 
-        return self.n_features, data
+        return data

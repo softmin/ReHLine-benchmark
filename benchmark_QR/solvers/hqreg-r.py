@@ -35,4 +35,4 @@ class Solver(BaseSolver):
         self.beta = np.array(beta)
 
     def get_result(self):
-        return self.beta.flatten()
+        return dict(beta=self.beta.flatten())

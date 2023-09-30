@@ -2,7 +2,7 @@ import numpy as np
 from benchopt import BaseObjective
 
 class Objective(BaseObjective):
-    min_benchopt_version = "1.3"
+    min_benchopt_version = "1.5"
     name = "ElasticQR"
 
     parameters = {
@@ -17,7 +17,10 @@ class Objective(BaseObjective):
     def set_data(self, X, y, q):
         self.X, self.y, self.q = X, y, q
 
-    def compute(self, beta):
+    def get_one_result(self):
+        return np.zeros(self.X.shape[1] + 1)
+
+    def evaluate_result(self, beta):
         n, d = self.X.shape
         out = np.dot(self.X, beta[:-1]) + beta[-1]
         loss = self.q * np.maximum(self.y - out, 0) + (1 - self.q) * np.maximum(out - self.y, 0)

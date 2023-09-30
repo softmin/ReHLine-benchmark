@@ -34,4 +34,4 @@ class Dataset(BaseDataset):
         q = 0.1
         data = dict(X=X, y=y, q=q)
 
-        return self.dataset_name, data
+        return data

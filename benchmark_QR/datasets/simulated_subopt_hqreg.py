@@ -1,7 +1,7 @@
 '''
-This example shows that `hqreg` provides a suboptimal solution in terms of regularized QR. 
-The simulated case is not one that has been specially constructed for the purpose of analysis, 
-but rather has been chosen to more aptly reflect the underlying issue. 
+This example shows that `hqreg` provides a suboptimal solution in terms of regularized QR.
+The simulated case is not one that has been specially constructed for the purpose of analysis,
+but rather has been chosen to more aptly reflect the underlying issue.
 Noted that `hqreg` is a approximation algorithm to QR, and does not provide an assurance with regards to optimality (under the authors' choice of tuning parameters).
 '''
 
@@ -37,4 +37,4 @@ class Dataset(BaseDataset):
 
         data = dict(X=X, y=y, q=q)
 
-        return self.n_features, data
+        return data
