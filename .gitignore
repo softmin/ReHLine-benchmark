@@ -1,0 +1,14 @@
+# Config files
+
+# Binary files
+*.o
+*.so
+*.dll
+.DS_Store
+
+# Python cache and build files
+**/__pycache__/
+**/__cache__/
+**/outputs/
+*.log
+
