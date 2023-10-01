@@ -1,9 +1,9 @@
 from benchopt import BaseDataset, safe_import_context
 from sklearn.preprocessing import StandardScaler
 import numpy as np
+
 with safe_import_context() as import_ctx:
     from benchopt.datasets import make_correlated_data
-
 
 class Dataset(BaseDataset):
 
@@ -38,4 +38,4 @@ class Dataset(BaseDataset):
         x_sensitive = x_sensitive - np.mean(x_sensitive)
         data = dict(X=X, y=y, Z=x_sensitive)
 
-        return self.n_features, data
+        return data

@@ -1,11 +1,10 @@
 import warnings
 import sys
 from benchopt import BaseSolver, safe_import_context
-sys.path.insert(0, '../') # the code for ReHLine is in this directory
 import numpy as np
 
 with safe_import_context() as import_ctx:
-    from _rehline import ReHLine
+    from rehline import ReHLine
 
 class Solver(BaseSolver):
     name = 'rehline'
@@ -22,7 +21,7 @@ class Solver(BaseSolver):
     def set_objective(self, X, y, Z, C, rho):
         self.X, self.y, self.Z, self.C, self.rho = X, y, Z, C, rho
         n, d = X.shape
-        
+
         A = np.repeat([self.Z @ self.X], repeats=[2], axis=0) / n
         A[1] = -A[1]
         b = np.array([self.rho, self.rho])
@@ -38,4 +37,4 @@ class Solver(BaseSolver):
         self.clf.fit(self.X)
 
     def get_result(self):
-        return self.clf.coef_
+        return dict(beta=self.clf.coef_)
