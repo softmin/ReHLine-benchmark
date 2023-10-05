@@ -11,8 +11,7 @@ class Solver(BaseSolver):
     stopping_strategy = "tolerance"
 
     install_cmd = 'pip'
-    requirements = ['cvxpy']
-
+    requirements = ['cvxpy==1.2.1']
     parameters = {
         # 'solver': ['ECOS', 'OSQP', 'CVXOPT', 'MOSEK', 'SCS'],
         'solver': ['ECOS', 'MOSEK', 'SCS', 'CPLEX', 'GUROBI'],

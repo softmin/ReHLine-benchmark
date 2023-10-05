@@ -130,9 +130,16 @@ benchopt run . -d reg_data  --max-runs 10 --n-repetitions 10
 
 (To be completed)
 
+Running the FairSVM benchmarks requires the initial implementation of FairSVM: https://github.com/mbilalzafar/fair-classification,
+based on `cvxopt` and `dccp`:
+
 ```bash
-pip install cvxpy dccp
+pip install cvxpy==1.2.1 dccp==1.0.3 scipy==1.10.0
 ```
+
+<!-- ```bash
+pip install cvxpy dccp
+``` -->
 
 ```bash
 benchopt run . -d classification_data
