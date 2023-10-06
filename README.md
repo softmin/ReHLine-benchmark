@@ -78,6 +78,20 @@ conda install r-base r-rcpp r-rcppeigen rpy2 -c conda-forge
 R -e "chooseCRANmirror(ind = 1); install.packages(c('hqreg'))"
 ```
 
+Additionally, in order to include the 'CPLEX' and 'GUROBI' commercial solvers, you will need to install the following two PyPI packages:
+```bash
+pip install gurobipy cplex
+```
+Due to the use of these two commercial solvers, the Community Edition or Restricted license is being used here. You may encounter the following errors:
+
+> **CPLEX**: CPLEX Error 1016 - Community Edition. Problem size limits have been exceeded. Please purchase a license at http://ibm.biz/error1016.
+>
+> **GUROBI**: Restricted license - for non-production use only - expires 2024-10-28.
+
+Please visit http://ibm.biz/error1016 to update your CPLEX license. Additionally, for GUROBI, please check the ARGUMENT 'env' which allows for the passage of a Gurobi Environment, specifying parameters and license information. You can find further information regarding the placement of the Gurobi license file 'gurobi.lic' at https://support.gurobi.com/hc/en-us/articles/360013417211-Where-do-I-place-the-Gurobi-license-file-gurobi-lic.
+
+*PS: We use `reg_sim` data to demonstrate that the free version of the two solvers has a very limited capacity to handle data scales.*
+
 In addition, we also test the R implementation of
 ReHLine. Use the following commands to download
 the source package and install it.
@@ -116,9 +130,16 @@ benchopt run . -d reg_data --n-repetitions 10
 
 (To be completed)
 
+Running the FairSVM benchmarks requires the initial implementation of FairSVM: https://github.com/mbilalzafar/fair-classification,
+based on `cvxopt` and `dccp`:
+
 ```bash
-pip install cvxpy dccp
+pip install cvxpy==1.2.1 dccp==1.0.3 scipy==1.10.0
 ```
+
+<!-- ```bash
+pip install cvxpy dccp
+``` -->
 
 ```bash
 benchopt run . -d classification_data
