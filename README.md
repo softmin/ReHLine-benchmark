@@ -36,10 +36,10 @@ cd benchmark_SVM
 benchopt run . -d classification_data
 ```
 
-To gather more repetitions, add the following option:
+To gather more repetitions, add the following options:
 
 ```bash
-benchopt run . -d classification_data --n-repetitions 10
+benchopt run . -d classification_data --n-repetitions 10 --timeout 1000
 ```
 
 To run the benchmark for a specific solver and data set,
@@ -63,40 +63,60 @@ And the running commands are similar to those in the SVM subsection.
 
 ```bash
 cd benchmark_sSVM
-benchopt run . -d classification_data --n-repetitions 10
+benchopt run . -d classification_data --n-repetitions 10 --timeout 1000
 ```
 
-### Elastic net regularized quantile regression (QR)
+### Ridge regularized Huber minimization
 
-Running the QR benchmarks requires the CVXPY package
+Running the Huber benchmarks requires the [CVXPY](https://www.cvxpy.org/) package
 and the R software. It would be easier to operate
 within a Conda environment.
 
 ```bash
-pip install cvxpy
-conda install r-base r-rcpp r-rcppeigen rpy2 -c conda-forge
+pip install cvxpy[MOSEK]
+conda install r-base rpy2 -c conda-forge
 R -e "chooseCRANmirror(ind = 1); install.packages(c('hqreg'))"
 ```
 
-Additionally, in order to include the 'CPLEX' and 'GUROBI' commercial solvers, you will need to install the following two PyPI packages:
+Also see the SVM subsection for the configuration of the
+[MOSEK](https://www.mosek.com/) commercial solver.
+
+To run all benchmarks available, enter the Huber directory and use the following command:
+
+```bash
+cd benchmark_Huber
+benchopt run . -d reg_data --n-repetitions 10 --timeout 1000
+```
+
+### Elastic net regularized quantile regression (QR)
+
+First follow the Huber subsection to install the
+dependencies there.
+Additionally, in order to include the
+[CPLEX](https://www.ibm.com/products/ilog-cplex-optimization-studio)
+and [Gurobi](https://www.gurobi.com/)
+commercial solvers, you will need to install the following two PyPI packages:
+
 ```bash
 pip install gurobipy cplex
 ```
+
 Due to the use of these two commercial solvers, the Community Edition or Restricted license is being used here. You may encounter the following errors:
 
 > **CPLEX**: CPLEX Error 1016 - Community Edition. Problem size limits have been exceeded. Please purchase a license at http://ibm.biz/error1016.
 >
 > **GUROBI**: Restricted license - for non-production use only - expires 2024-10-28.
 
-Please visit http://ibm.biz/error1016 to update your CPLEX license. Additionally, for GUROBI, please check the ARGUMENT 'env' which allows for the passage of a Gurobi Environment, specifying parameters and license information. You can find further information regarding the placement of the Gurobi license file 'gurobi.lic' at https://support.gurobi.com/hc/en-us/articles/360013417211-Where-do-I-place-the-Gurobi-license-file-gurobi-lic.
+Please visit http://ibm.biz/error1016 to update your CPLEX license. Additionally, for GUROBI, please check the ARGUMENT 'env' which allows for the passage of a Gurobi Environment, specifying parameters and license information. You can find further information regarding the placement of the Gurobi license file `gurobi.lic` at https://support.gurobi.com/hc/en-us/articles/360013417211-Where-do-I-place-the-Gurobi-license-file-gurobi-lic.
 
 *PS: We use `reg_sim` data to demonstrate that the free version of the two solvers has a very limited capacity to handle data scales.*
 
-In addition, we also test the R implementation of
+Finally, we also test the R implementation of
 ReHLine. Use the following commands to download
 the source package and install it.
 
-```
+```bash
+conda install r-rcpp r-rcppeigen -c conda-forge
 curl -L -O https://github.com/softmin/ReHLine-r/archive/refs/heads/main.zip
 unzip main.zip
 R CMD INSTALL ReHLine-r-main
@@ -106,7 +126,7 @@ To run all benchmarks available, enter the QR directory and use the following co
 
 ```bash
 cd benchmark_QR
-benchopt run . -d reg_data --n-repetitions 10
+benchopt run . -d reg_data --n-repetitions 10 --timeout 1000
 ```
 
 There are also some simulated data sets available:
@@ -115,33 +135,65 @@ There are also some simulated data sets available:
 benchopt run . -d reg_sim
 ```
 
-### Ridge regularized Huber minimization
-
-The dependencies are the same as those in the QR subsection.
-
-To run all benchmarks available, enter the Huber directory and use the following command:
-
-```bash
-cd benchmark_Huber
-benchopt run . -d reg_data --n-repetitions 10
-```
-
 ### FairSVM
 
-(To be completed)
-
-Running the FairSVM benchmarks requires the initial implementation of FairSVM: https://github.com/mbilalzafar/fair-classification,
-based on `cvxopt` and `dccp`:
+Following the Huber and QR subsections, first install
+[CVXPY](https://www.cvxpy.org/) with commercial solvers
+[MOSEK](https://www.mosek.com/),
+[CPLEX](https://www.ibm.com/products/ilog-cplex-optimization-studio),
+and [Gurobi](https://www.gurobi.com/):
 
 ```bash
-pip install cvxpy==1.2.1 dccp==1.0.3 scipy==1.10.0
+pip install cvxpy[MOSEK] gurobipy cplex
 ```
 
-<!-- ```bash
-pip install cvxpy dccp
-``` -->
+We also include the original implementation of
+[FairSVM](https://github.com/mbilalzafar/fair-classification)
+based on the
+[DCCP](https://github.com/cvxgrp/dccp) package:
 
 ```bash
-benchopt run . -d classification_data
+pip install dccp==1.0.3
+```
+
+Note that we explicitly specify the version of DCCP, since otherwise
+the installation may encounter errors.
+The file `benchmark_FairSVM/fair_classification/linear_clf_pref_fairness.py`
+is derived from the original
+[FairSVM](https://github.com/mbilalzafar/fair-classification) repository,
+with slight modifications for software compatibility.
+
+To run all benchmarks available, enter the FairSVM directory and use the following command:
+
+```bash
+cd benchmark_FairSVM
+benchopt run . -d classification_data --n-repetitions 10 --timeout 1000
+```
+
+There are also some simulated data sets available:
+
+```bash
 benchopt run . -d classification_sim
+```
+
+## Overall benchmarks
+
+Assuming all dependencies are properly installed,
+the following commands are used to generate benchmark results in the article:
+
+```bash
+cd benchmark_SVM
+benchopt run . -d classification_data --n-repetitions 10 --timeout 1000
+
+cd ../benchmark_sSVM
+benchopt run . -d classification_data --n-repetitions 10 --timeout 1000
+
+cd ../benchmark_Huber
+benchopt run . -d reg_data --n-repetitions 10 --timeout 1000
+
+cd ../benchmark_QR
+benchopt run . -d reg_data --n-repetitions 10 --timeout 1000
+
+cd ../benchmark_FairSVM
+benchopt run . -d classification_data --n-repetitions 10 --timeout 1000
 ```
