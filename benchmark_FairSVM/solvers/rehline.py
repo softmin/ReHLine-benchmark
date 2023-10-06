@@ -9,7 +9,7 @@ with safe_import_context() as import_ctx:
 class Solver(BaseSolver):
     name = 'rehline'
 
-    stopping_strategy = "iteration"
+    sampling_strategy = "iteration"
     install_cmd = 'pip'
     requirements = ['scikit-learn']
 

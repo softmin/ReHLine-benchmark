@@ -21,7 +21,7 @@ class Solver(BaseSolver):
 
     install_cmd = 'conda'
     requirements = ['r-base', 'rpy2']
-    stopping_strategy = 'iteration'
+    sampling_strategy = 'iteration'
 
     def set_objective(self, X, y, tau, lam1, lam2):
         self.X, self.y, self.tau, self.lam1, self.lam2 = X, y, tau, lam1, lam2

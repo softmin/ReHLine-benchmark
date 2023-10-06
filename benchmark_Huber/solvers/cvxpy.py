@@ -8,7 +8,7 @@ with safe_import_context() as import_ctx:
 
 class Solver(BaseSolver):
     name = 'cvxpy'
-    stopping_strategy = "tolerance"
+    sampling_strategy = "tolerance"
 
     install_cmd = 'pip'
     requirements = ['cvxpy']
