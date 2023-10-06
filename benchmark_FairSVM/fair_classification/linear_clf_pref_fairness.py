@@ -2,19 +2,11 @@ from __future__ import division
 import os,sys
 import numpy as np
 import traceback
-
-sys.path.insert(0, "/home/mzafar/libraries/dccp") # we will store the latest version of DCCP here.
 import cvxpy as cvx
 import dccp
 from dccp.problem import is_dccp
 
-
-
-
-
-
 class LinearClf():
-
 
     def __init__(self, loss_function, cov_thresh=.1, lam=None, train_multiple=False, max_iters=100, random_state=1234):
 
@@ -129,9 +121,9 @@ class LinearClf():
             # obj += cvx.sum_squares(w[1:]) * self.lam # regularizer -- first term in w is the intercept, so no need to regularize that
             obj += cvx.sum_squares(w) * self.lam
             if self.loss_function == "logreg":
-                obj += cvx.sum(  logistic( cvx.multiply(-y, X*w) )  ) / num_all
+                obj += cvx.sum(  logistic( cvx.multiply(-y, X @ w) )  ) / num_all
             elif self.loss_function == "svm_linear":
-                obj += cvx.sum ( cvx.maximum (0, 1 - cvx.multiply ( y,  X*w)) ) / num_all
+                obj += cvx.sum ( cvx.maximum (0, 1 - cvx.multiply ( y,  X @ w)) ) / num_all
             else:
                 raise Exception("Invalid loss function")
 
@@ -300,13 +292,13 @@ class LinearClf():
         constraints = []
         z_i_z_bar = x_sensitive - np.mean(x_sensitive)
 
-        fx = X*w
+        fx = X @ w
         prod = cvx.sum( cvx.multiply(z_i_z_bar, fx) ) / X.shape[0]
         
 
         constraints.append( prod <=  cov_thresh )
         constraints.append( prod >= -cov_thresh )
-        print(constraints)
+        # print(constraints)
         return constraints
 
 
