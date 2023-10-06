@@ -36,10 +36,10 @@ cd benchmark_SVM
 benchopt run . -d classification_data
 ```
 
-To gather more repetitions, add the following options:
+To gather more repetitions, add the following option:
 
 ```bash
-benchopt run . -d classification_data --max-runs 10 --n-repetitions 10
+benchopt run . -d classification_data --n-repetitions 10
 ```
 
 To run the benchmark for a specific solver and data set,
@@ -63,7 +63,7 @@ And the running commands are similar to those in the SVM subsection.
 
 ```bash
 cd benchmark_sSVM
-benchopt run . -d classification_data --max-runs 10 --n-repetitions 10
+benchopt run . -d classification_data --n-repetitions 10
 ```
 
 ### Elastic net regularized quantile regression (QR)
@@ -92,7 +92,7 @@ To run all benchmarks available, enter the QR directory and use the following co
 
 ```bash
 cd benchmark_QR
-benchopt run . -d reg_data  --max-runs 10 --n-repetitions 10
+benchopt run . -d reg_data --n-repetitions 10
 ```
 
 There are also some simulated data sets available:
@@ -109,7 +109,7 @@ To run all benchmarks available, enter the Huber directory and use the following
 
 ```bash
 cd benchmark_Huber
-benchopt run . -d reg_data  --max-runs 10 --n-repetitions 10
+benchopt run . -d reg_data --n-repetitions 10
 ```
 
 ### FairSVM
