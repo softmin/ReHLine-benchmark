@@ -4,6 +4,9 @@ Many problems of recent interest in statistics and machine
 learning can be solved by **ReHLine**, and we provide reproducible
 benchmark code and results at this repository.
 
+> [!NOTE]  
+> This benchmark is based on ReHLine 0.0.3.
+
 | Problem   |      Results      |
 |---------- |:-----------------:|
 |[SVM](https://github.com/softmin/ReHLine-benchmark/tree/main/benchmark_SVM) | [Result](https://rehline-python.readthedocs.io/en/latest/_static/benchmark/benchmark_SVM.html)|
@@ -18,6 +21,7 @@ For all benchmarks, it is necessary to install the following packages.
 
 ```bash
 pip install benchopt scikit-learn
+pip install rehline==0.0.3
 ```
 
 Then each problem has its own dependencies,
